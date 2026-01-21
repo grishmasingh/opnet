@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+/**
+ * App Component
+ * 
+ * The main layout component for the OP_NET Token Dashboard.
+ * Composes the page from smaller, focused components.
+ * 
+ * Layout:
+ * 1. Title
+ * 2. TokenInfoSection - Token metadata (always visible)
+ * 3. WalletSection - Wallet connection UI
+ * 4. BalanceSection - User balance/allowance (when connected)
+ * 5. ApproveSection - Approve tokens for spender (when connected)
+ */
+
+import { Toaster } from 'react-hot-toast'
+import { TokenInfoSection, WalletSection, BalanceSection, ApproveSection } from './components'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app">
+      <Toaster 
+        position="top-left"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#1a1a2e',
+            color: '#fff',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          },
+          success: {
+            iconTheme: { primary: '#4ade80', secondary: '#1a1a2e' },
+          },
+          error: {
+            iconTheme: { primary: '#f87171', secondary: '#1a1a2e' },
+          },
+        }}
+      />
+      <h1>OP_NET Token Dashboard</h1>
+      <TokenInfoSection />
+      <WalletSection />
+      <BalanceSection />
+      <ApproveSection />
+    </div>
   )
 }
 
