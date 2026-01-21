@@ -1,5 +1,7 @@
 # OP_NET Token Dashboard
 
+![Bitcoin](https://img.shields.io/badge/Bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+
 A React app that connects to OP_WALLET via `@btc-vision/walletconnect` and interacts with an OP_20 token.
 
 **_Please refer to this [Pull Request](https://github.com/grishmasingh/opnet/pull/2) for full code breakdown and code comments._**
@@ -47,8 +49,8 @@ Config: `eslint.config.js` extends `eslint.configs.recommended` and `tseslint.co
 
 | Token | Address |
 |-------|---------|
-| MOTO | `0xb7e01bd7c583ef6d2e4fd0e3bb9835f275c54b5dc5af44a442b526ebaeeebfb9` |
-| PILL | `0x186f943f8b0f803be7a44fce28739ff65953cf2bd83687a392186adaf293a336` |
+| MOTO | `0x0a6732489a31e6de07917a28ff7df311fc5f98f6e1664943ac1c3fe7893bdab5` |
+| PILL | `0xfb7df2f08d8042d4df0506c0d4cee3cfa5f2d7b02ef01ec76dd699551393a438` |
 
 **To change token:** Update `VITE_TOKEN_ADDRESS` in your `.env` file.
 
@@ -71,7 +73,6 @@ VITE_SPENDER_ADDRESS=  # Address for allowance checks
 
 ## Repository
 
-**URL:** https://github.com/grishmasingh/opnet
 
 **Commit Breakdown:**
 
@@ -119,23 +120,8 @@ VITE_SPENDER_ADDRESS=  # Address for allowance checks
 
 ## Documentation & Resources
 
-This app was built using the [OP_NET Documentation](https://docs.opnet.org/). Key sections referenced:
-
-**Wallet Integration:**
-- [Using WalletConnect](https://docs.opnet.org/docs/wallet-integration/walletconnect/introduction) - Connection, session management, signing transactions
-- [WalletConnect Context](https://docs.opnet.org/docs/wallet-integration/walletconnect/walletconnect-context) - React hooks (`useWalletConnect`)
-- [OP_WALLET Guide](https://docs.opnet.org/docs/wallet-integration/op-wallet/setting-up-op-wallet) - Wallet setup
-
-**Smart Contracts:**
-- [Smart Contract Interactions](https://docs.opnet.org/docs/opnet-client-library/smart-contract-interactions/import-abi-and-contract-types) - Using `getContract`, ABI, simulating calls
-- [OP-20 Tokens](https://docs.opnet.org/docs/token-standards/op-20/introduction) - Token standard, allowance, transfers
-
-**Frontend:**
-- [React (Vite) Setup](https://docs.opnet.org/docs/frontend-integration/setting-up-your-environment/react-vite) - Vite configuration with polyfills
-
-**Utilities:**
-- [OP_SCAN Explorer](https://opscan.org) - View transactions
-- [Regtest Faucet](https://faucet.opnet.org) - Get test BTC
+- This app was built using the [OP_NET Documentation](https://docs.opnet.org/).
+- To get testing tokens , please use [OP_NET Faucet](https://faucet.opnet.org/)
 
 ---
 
