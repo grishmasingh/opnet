@@ -2,10 +2,6 @@
  * Application Constants & Configuration
  * 
  * Centralizes all configuration values, environment variables, and constants.
- * This makes it easy to:
- * - Change values in one place
- * - See all configuration at a glance
- * - Avoid magic strings/numbers scattered throughout the codebase
  */
 
 import { networks } from '@btc-vision/bitcoin'
@@ -53,7 +49,7 @@ export const OPSCAN_URL = 'https://opscan.org'
  * @param txId - The transaction ID
  * @returns Full URL to view transaction on OP_SCAN
  */
-export const OPSCAN_TX_URL = (txId: string) => `${OPSCAN_URL}/tx/${txId}`
+export const OPSCAN_TX_URL = (txId: string) => `${OPSCAN_URL}/transactions/${txId}?network=regtest`
 
 // =============================================================================
 // UI Constants

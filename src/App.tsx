@@ -9,9 +9,10 @@
  * 2. TokenInfoSection - Token metadata (always visible)
  * 3. WalletSection - Wallet connection UI
  * 4. BalanceSection - User balance/allowance (when connected)
+ * 5. ApproveSection - Approve tokens for spender (when connected)
  */
 
-import { TokenInfoSection, WalletSection, BalanceSection } from './components'
+import { TokenInfoSection, WalletSection, BalanceSection, ApproveSection } from './components'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <TokenInfoSection />
       <WalletSection />
       <BalanceSection />
+      <ApproveSection />
     </div>
   )
 }
