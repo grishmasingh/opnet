@@ -1,13 +1,26 @@
+/**
+ * useTokenMetadata Hook
+ * 
+ * fetches OP_20 token metadata from the blockchain.
+ * This works WITHOUT requiring a wallet connection - it reads public data
+ * directly from the blockchain via RPC.
+ * 
+ * Fetches: name, symbol, decimals, maxSupply, totalSupply
+ * 
+ * @returns {TokenMetadataState} Object containing:
+ *   - data: The token metadata (or null if not loaded)
+ *   - loading: Whether data is currently being fetched
+ *   - error: Error message if fetch failed (or null)
+ */
+
 import { useState, useEffect } from 'react'
 import { getContract, OP_20_ABI, JSONRpcProvider } from 'opnet'
 import type { IOP20Contract } from 'opnet'
-import { networks } from '@btc-vision/bitcoin'
+import { TOKEN_ADDRESS, RPC_URL, NETWORK } from '../config'
 import type { TokenMetadata, TokenMetadataState } from '../types/token'
 
-const TOKEN_ADDRESS = import.meta.env.VITE_TOKEN_ADDRESS as string
-const RPC_URL = import.meta.env.VITE_RPC_URL as string
-
 export function useTokenMetadata(): TokenMetadataState {
+  // State to track loading status, data, and any errors
   const [state, setState] = useState<TokenMetadataState>({
     data: null,
     loading: true,
@@ -15,7 +28,12 @@ export function useTokenMetadata(): TokenMetadataState {
   })
 
   useEffect(() => {
+    // Flag to prevent state updates after component unmounts
+    // This prevents the "Can't perform state update on unmounted component" warning
+    let isMounted = true
+
     async function fetchTokenMetadata() {
+      // Validate that required environment variables are set
       if (!TOKEN_ADDRESS || !RPC_URL) {
         setState({
           data: null,
@@ -26,20 +44,24 @@ export function useTokenMetadata(): TokenMetadataState {
       }
 
       try {
+        // Set loading state while fetching
         setState(prev => ({ ...prev, loading: true, error: null }))
 
-        // Create RPC provider for read-only calls
-        const provider = new JSONRpcProvider(RPC_URL, networks.regtest)
+        // Create an RPC provider to communicate with the blockchain
+        // This doesn't require a wallet - it's read-only access
+        const provider = new JSONRpcProvider(RPC_URL, NETWORK)
 
-        // Get contract instance (no sender needed for read-only)
+        // Get a typed contract instance for the OP_20 token
+        // This gives us access to all OP_20 standard methods
         const contract = getContract<IOP20Contract>(
           TOKEN_ADDRESS,
           OP_20_ABI,
           provider,
-          networks.regtest,
+          NETWORK,
         )
 
-        // Fetch all metadata in parallel
+        // Fetch all metadata in parallel for better performance
+        // Promise.all runs all requests simultaneously instead of sequentially
         const [nameResult, symbolResult, decimalsResult, maxSupplyResult, totalSupplyResult] = await Promise.all([
           contract.name(),
           contract.symbol(),
@@ -48,6 +70,7 @@ export function useTokenMetadata(): TokenMetadataState {
           contract.totalSupply(),
         ])
 
+        // Extract the actual values from the result objects
         const metadata: TokenMetadata = {
           name: nameResult.properties.name,
           symbol: symbolResult.properties.symbol,
@@ -56,23 +79,38 @@ export function useTokenMetadata(): TokenMetadataState {
           totalSupply: totalSupplyResult.properties.totalSupply,
         }
 
-        setState({
-          data: metadata,
-          loading: false,
-          error: null,
-        })
+        // Only update state if component is still mounted
+        if (isMounted) {
+          setState({
+            data: metadata,
+            loading: false,
+            error: null,
+          })
+        }
       } catch (err) {
+        // Log error for debugging
         console.error('Failed to fetch token metadata:', err)
-        setState({
-          data: null,
-          loading: false,
-          error: err instanceof Error ? err.message : 'Failed to fetch token metadata',
-        })
+        
+        // Update state with error message (only if still mounted)
+        if (isMounted) {
+          setState({
+            data: null,
+            loading: false,
+            error: err instanceof Error ? err.message : 'Failed to fetch token metadata',
+          })
+        }
       }
     }
 
+    // Trigger the fetch
     void fetchTokenMetadata()
-  }, [])
+
+    // Cleanup function - runs when component unmounts
+    // Sets isMounted to false to prevent state updates after unmount
+    return () => {
+      isMounted = false
+    }
+  }, []) // Empty dependency array = run once on mount
 
   return state
 }
