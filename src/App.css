@@ -1,38 +1,28 @@
-/* CSS Variables */
-:root {
-  --color-primary: #f7931a;
-  --color-primary-hover: #ffa940;
-  --color-background: #1a1a2e;
-  --color-text: #fff;
-  --color-text-muted: #888;
-  --color-error: #ff6b6b;
-  --color-error-bg: rgba(255, 77, 77, 0.1);
-  --color-error-border: rgba(255, 77, 77, 0.3);
-  --color-border: rgba(255, 255, 255, 0.1);
-  --border-radius: 12px;
-  --border-radius-sm: 8px;
-}
+/**
+ * App Component Styles
+ * 
+ * Component-specific styles for the OP_NET Token Dashboard.
+ * Global styles and CSS variables are defined in index.css.
+ */
 
+/* ============================================
+   App Container
+   ============================================ */
 .app {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: var(--max-width);
 }
 
-h1 {
-  margin-bottom: 2rem;
+.app > h1 {
+  margin-bottom: 1.5rem;
   color: var(--color-primary);
   text-align: center;
   font-size: 1.75rem;
 }
 
-h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.25rem;
-  color: var(--color-text);
-}
-
-/* Shared section styling */
+/* ============================================
+   Section Cards (Shared)
+   ============================================ */
 .token-section,
 .wallet-section,
 .balance-section,
@@ -40,10 +30,23 @@ h2 {
   background: var(--color-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border: 1px solid var(--color-border);
 }
 
-/* Section header with refresh button */
+.token-section h2,
+.wallet-section h2,
+.balance-section h2,
+.approve-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+/* ============================================
+   Section Header (with refresh button)
+   ============================================ */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -55,35 +58,21 @@ h2 {
   margin: 0;
 }
 
-.btn-refresh {
-  background: transparent;
-  border: 1px solid var(--color-border);
+.section-description {
   color: var(--color-text-muted);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.btn-refresh:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.btn-refresh:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Info rows */
+/* ============================================
+   Info Rows (Token info, Wallet info, Balance)
+   ============================================ */
 .token-info,
 .wallet-info,
 .balance-info {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .info-row {
@@ -111,12 +100,179 @@ h2 {
 }
 
 .value.address {
-  font-family: monospace;
-  font-size: 0.85rem;
-  max-width: 300px;
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  max-width: 280px;
 }
 
-/* Loading and error states */
+/* ============================================
+   Spender Info Display
+   ============================================ */
+.spender-info,
+.spender-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8rem;
+}
+
+.spender-info .label,
+.spender-display .label {
+  font-size: 0.75rem;
+}
+
+.spender-info .value,
+.spender-display .value {
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  word-break: break-all;
+}
+
+/* ============================================
+   Connect Hint
+   ============================================ */
+.connect-hint {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, opacity 0.2s;
+  width: 100%;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Button Variants */
+.btn-disconnect {
+  background: transparent;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  margin-top: 1rem;
+}
+
+.btn-disconnect:hover:not(:disabled) {
+  background: var(--color-error-bg);
+}
+
+.btn-refresh {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.btn-refresh:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.btn-retry {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  width: auto;
+}
+
+.btn-primary {
+  margin-bottom: 0.5rem;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-background-secondary);
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-group input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input-error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   Loading & Error States
+   ============================================ */
 .loading {
   color: var(--color-text-muted);
   text-align: center;
@@ -135,153 +291,13 @@ h2 {
   margin: 0 0 0.75rem 0;
 }
 
-.btn-retry {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-/* Spender info (smaller text) */
-.spender-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-  font-size: 0.8rem;
-}
-
-.spender-info .label {
-  font-size: 0.75rem;
-}
-
-.spender-info .value {
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-}
-
-/* Connect hint */
-.connect-hint {
-  color: var(--color-text-muted);
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-/* Buttons */
-.btn {
-  background: var(--color-primary);
-  color: #000;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  width: 100%;
-}
-
-.btn:hover {
-  background: var(--color-primary-hover);
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn:disabled {
-  background: #555;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.btn-disconnect {
-  background: transparent;
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-  margin-top: 1rem;
-}
-
-.btn-disconnect:hover {
-  background: rgba(247, 147, 26, 0.1);
-}
-
-/* Approve Section */
-.section-description {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text);
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
-
-.form-group input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.input-error {
-  display: block;
-  color: var(--color-error);
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-}
-
-.spender-display {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: var(--border-radius-sm);
-  font-size: 0.8rem;
-}
-
-.spender-display .value {
-  font-family: monospace;
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-  word-break: break-all;
-}
-
-.btn-approve {
-  background: var(--color-primary);
-}
-
-/* Modal */
+/* ============================================
+   Modal
+   ============================================ */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -296,6 +312,7 @@ h2 {
   max-width: 400px;
   width: 100%;
   text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .modal h3 {
@@ -309,7 +326,7 @@ h2 {
 }
 
 .modal-icon.success {
-  color: #4caf50;
+  color: var(--color-success);
 }
 
 .modal-icon.error {
@@ -317,7 +334,7 @@ h2 {
 }
 
 .tx-id {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-background-secondary);
   border-radius: var(--border-radius-sm);
   padding: 1rem;
   margin-bottom: 1rem;
@@ -331,7 +348,7 @@ h2 {
 }
 
 .tx-id .value {
-  font-family: monospace;
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
   font-size: 0.75rem;
   color: var(--color-text-muted);
 }
@@ -341,28 +358,19 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.btn-primary {
-  margin-bottom: 0.5rem;
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .app {
-    padding: 1rem;
+/* ============================================
+   Responsive - Mobile
+   ============================================ */
+@media (max-width: 600px) {
+  .app > h1 {
+    font-size: 1.5rem;
   }
 
-  h1 {
-    font-size: 1.5rem;
+  .token-section,
+  .wallet-section,
+  .balance-section,
+  .approve-section {
+    padding: 1rem;
   }
 
   .info-row {
@@ -377,9 +385,22 @@ h2 {
 
   .value.address {
     max-width: 100%;
+    font-size: 0.7rem;
   }
 
   .modal {
     padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .app > h1 {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
