@@ -10,6 +10,7 @@ import { useWalletConnect } from '@btc-vision/walletconnect'
 import { getContract, OP_20_ABI } from 'opnet'
 import type { IOP20Contract } from 'opnet'
 import { Address } from '@btc-vision/transaction'
+import toast from 'react-hot-toast'
 import { TOKEN_ADDRESS, SPENDER_ADDRESS, DEFAULT_MAX_SATS_TO_SPEND } from '../config'
 import { TransactionModal } from './TransactionModal'
 
@@ -57,6 +58,9 @@ export function ApproveSection() {
     setIsLoading(true)
     setInputError(null)
 
+    // Show pending toast
+    const pendingToastId = toast.loading('Submitting transaction...')
+
     try {
       // Convert amount to bigint (assuming 18 decimals)
       const amountBigInt = BigInt(Math.floor(Number(amount) * 10 ** 18))
@@ -80,6 +84,9 @@ export function ApproveSection() {
         throw new Error('Approve simulation failed')
       }
 
+      // Update toast - waiting for wallet confirmation
+      toast.loading('Waiting for wallet confirmation...', { id: pendingToastId })
+
       // Send the transaction
       const tx = await approveCall.sendTransaction({
         signer: null,        // OP_WALLET doesn't need a signer
@@ -93,7 +100,10 @@ export function ApproveSection() {
         throw new Error('Transaction failed - no transaction ID returned')
       }
 
-      // Success!
+      // Success toast!
+      toast.success('Transaction confirmed!', { id: pendingToastId })
+
+      // Success - show modal with details
       setTxId(tx.transactionId)
       setTxError(null)
       setModalOpen(true)
@@ -108,8 +118,13 @@ export function ApproveSection() {
                               errorMessage.toLowerCase().includes('denied') ||
                               errorMessage.toLowerCase().includes('cancel')
       
+      const displayError = isUserRejection ? 'Transaction rejected by user' : errorMessage
+
+      // Failed toast
+      toast.error(displayError, { id: pendingToastId })
+      
       setTxId(null)
-      setTxError(isUserRejection ? 'Transaction was rejected by user' : errorMessage)
+      setTxError(displayError)
       setModalOpen(true)
     } finally {
       setIsLoading(false)
