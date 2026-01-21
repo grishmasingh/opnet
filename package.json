@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@btc-vision/walletconnect": "^1.9.17",
+    "opnet": "^1.8.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "vite-plugin-eslint2": "^5.0.4",
