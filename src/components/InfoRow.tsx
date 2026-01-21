@@ -1,6 +1,4 @@
 /**
- * InfoRow Component
- * 
  * A reusable component for displaying label-value pairs in a consistent format.
  * Used throughout the app to display token metadata, wallet info, etc.
  * 

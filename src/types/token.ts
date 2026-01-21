@@ -45,3 +45,43 @@ export interface TokenMetadataState {
   /** Error message if the fetch failed, or null if successful */
   error: string | null
 }
+
+/**
+ * Token User Data
+ * 
+ * Represents user-specific token data (requires wallet connection).
+ * Fetched using the connected wallet's address.
+ */
+export interface TokenUserData {
+  /** Token symbol for display */
+  symbol: string
+  
+  /** Number of decimals for formatting */
+  decimals: number
+  
+  /** User's token balance (in smallest units) */
+  balance: bigint
+  
+  /** Allowance granted to the configured SPENDER (in smallest units) */
+  allowance: bigint
+}
+
+/**
+ * Token User Data State
+ * 
+ * Represents the state of a user data fetch operation.
+ * Used by useTokenUserData hook to communicate loading/error states.
+ */
+export interface TokenUserDataState {
+  /** The fetched user data, or null if not loaded or on error */
+  data: TokenUserData | null
+  
+  /** Whether the data is currently being fetched */
+  loading: boolean
+  
+  /** Error message if the fetch failed, or null if successful */
+  error: string | null
+  
+  /** Function to manually refresh the data */
+  refetch: () => void
+}
