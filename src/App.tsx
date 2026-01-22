@@ -10,10 +10,11 @@
  * 3. WalletSection - Wallet connection UI
  * 4. BalanceSection - User balance/allowance (when connected)
  * 5. ApproveSection - Approve tokens for spender (when connected)
+ * 6. BurnSection - Burn tokens to reduce supply (when connected)
  */
 
 import { Toaster } from 'react-hot-toast'
-import { TokenInfoSection, WalletSection, BalanceSection, ApproveSection } from './components'
+import { TokenInfoSection, WalletSection, BalanceSection, ApproveSection, BurnSection } from './components'
 import './App.css'
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
       <WalletSection />
       <BalanceSection />
       <ApproveSection />
+      <BurnSection />
     </div>
   )
 }
