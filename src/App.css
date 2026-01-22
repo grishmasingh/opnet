@@ -26,7 +26,8 @@
 .token-section,
 .wallet-section,
 .balance-section,
-.approve-section {
+.approve-section,
+.burn-section {
   background: var(--color-background);
   border-radius: var(--border-radius);
   padding: 1.5rem;
@@ -38,7 +39,8 @@
 .token-section h2,
 .wallet-section h2,
 .balance-section h2,
-.approve-section h2 {
+.approve-section h2,
+.burn-section h2 {
   margin-bottom: 1rem;
   font-size: 1.1rem;
   color: var(--color-text);
@@ -369,7 +371,8 @@
   .token-section,
   .wallet-section,
   .balance-section,
-  .approve-section {
+  .approve-section,
+  .burn-section {
     padding: 1rem;
   }
 
